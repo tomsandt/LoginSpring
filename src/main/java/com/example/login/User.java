@@ -1,27 +1,27 @@
 package com.example.login;
 
+import jakarta.persistence.*;
 
-
+@Entity
 public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
+	@Column(nullable = false, unique = true)
 	public String username;
+	@Column(nullable = false)
 	public String password;
+	@Transient
 	public String repeatPassword;
-	public int alter;
+	@Column(nullable = false)
+	public int benutzeralter;
+	@Column(nullable = false)
 	public String email;
 	
 	
 	public String getRepeatPassword() {
 		return repeatPassword;
-	}
-	public void setRepeatPassword(String repeatPassword) {
-		this.repeatPassword = repeatPassword;
-	}
-	public int getAlter() {
-		return alter;
-	}
-	public void setAlter(int alter) {
-		this.alter = alter;
 	}
 	public String getEmail() {
 		return email;
@@ -45,4 +45,11 @@ public class User {
 		this.password = password;
 	}
 
+	public int getBenutzeralter() {
+		return benutzeralter;
+	}
+
+	public void setBenutzeralter(int benutzeralter) {
+		this.benutzeralter = benutzeralter;
+	}
 }

@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class TestController {
 	
-	private final UserService userService;
+	private final UserRepository userService;
 	
 	@Autowired
-	public TestController(UserService userService) {
+	public TestController(UserRepository userService) {
 		this.userService = userService;
 	}
 	
@@ -35,9 +35,9 @@ public class TestController {
 	@GetMapping("/landingPage")
 	public String showLandingPage(Model model,@RequestParam("username") String username) {
 		
-		User user = userService.getUserByUsername(username);
+		User user = userService.findUserByUsername(username);
 		
-;		if(user != null) {
+		if(user != null) {
 			model.addAttribute("user", user);
 		}else {
 			
@@ -48,8 +48,8 @@ public class TestController {
 	
 	@PostMapping("/")
 	public String processLogin(Model model, User user) {
-		User storedUser = userService.getUserByUsername(user.getUsername());
-		if( storedUser != null && storedUser.getPassword().equals(user.getPassword())) {
+		User storedUser = userService.findUserByUsername(user.getUsername());
+		if( storedUser != null && storedUser.getPassword().equals(UserService.hashPassword(user.getPassword()))) {
 			return "redirect:landingPage?username=" + user.getUsername();
 		}else {
 			model.addAttribute("error", "Falscher Benutzername oder Passwort");
@@ -61,12 +61,12 @@ public class TestController {
 	public String processRegister(User user, Model model) {
 		
 
-		if(userService.getUserByUsername(user.getUsername()) != null) {
+		if(userService.findUserByUsername(user.getUsername()) != null) {
 			model.addAttribute("error", "Benutzername bereits vergeben!");
 			return "register";
 		}
 		
-		if(user.getUsername().length() == 0 || user.getPassword().length() == 0 || user.getEmail().length() == 0) {
+		if(user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty()) {
 			model.addAttribute("errorEmptyField", "Das Feld darf nicht leer sein!");
 			return "register";
 		}
@@ -75,8 +75,12 @@ public class TestController {
 			model.addAttribute("errorRepeatPassword", "Die Passwörter stimmen nicht überein!");
 			return "register";
 		}
+
+		String hashPassword = UserService.hashPassword(user.getPassword());
+
+		user.setPassword(hashPassword);
 		
-		userService.registerUser(user);
+		userService.saveUser(user.getUsername(), hashPassword, user.getBenutzeralter(), user.getEmail());
 		
 		
 		
@@ -84,7 +88,7 @@ public class TestController {
 	}
 	
 	@PostMapping("/logout")
-	public String logout(Model model, HttpSession session) {
+	public String logout(HttpSession session) {
 		session.invalidate();
 		
 		return "redirect:/";
