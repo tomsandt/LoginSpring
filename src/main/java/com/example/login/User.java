@@ -8,6 +8,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	public String test;
 	@Column(nullable = false, unique = true)
 	public String username;
 	@Column(nullable = false)
