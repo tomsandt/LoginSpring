@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 
 @Controller
-public class TestController {
+public class TestController {  // rename TestController -> Controller using Idea renaming feature
 	
 	private final UserRepository userService;
 	
@@ -37,10 +37,9 @@ public class TestController {
 		
 		User user = userService.findUserByUsername(username);
 		
-		if(user != null) {
+		if (user != null) {
 			model.addAttribute("user", user);
-		}else {
-			
+		} else {
 			model.addAttribute("errorUserNotFound", "Der Benutzer konnte nicht gefunden werden!");
 		}
 		return "landingPage";
@@ -49,19 +48,42 @@ public class TestController {
 	@PostMapping("/")
 	public String processLogin(Model model, User user) {
 		User storedUser = userService.findUserByUsername(user.getUsername());
-		if( storedUser != null && storedUser.getPassword().equals(UserService.hashPassword(user.getPassword()))) {
+		/*
+		if ( storedUser != null && storedUser.getPassword().equals(UserService.hashPassword(user.getPassword()))) {
 			return "redirect:landingPage?username=" + user.getUsername();
-		}else {
+		} else {
 			model.addAttribute("error", "Falscher Benutzername oder Passwort");
 			return "index";
 		}
+		*/
+		// Tom, your code above is good :)
+		// Just as a general rule of thumb on how to check error cases:
+		// - first check all error cases - case by case - and abort if there is an error
+		// - then process the success case
+		// This makes the code clearer and easier to understand.
+		// Actually in processRegister() you already did it this way :)
+		// Example for the code above:
+		
+		if ( storedUser == null ) {
+			model.addAttribute("error", "Unbekannter Benutzername");
+			return "index";
+		}
+		
+		final String hashedPwd = storedUser.getPassword();
+		assert hashedPwd != null : "hashedPwd is null: processRegister() should have prevented this!";
+		if ( !hashedPwd.equals(UserService.hashPassword(user.getPassword())) ) {
+			model.addAttribute("error", "Falsches Passwort");
+			return "index";
+		}
+
+		return "redirect:landingPage?username=" +user.getUsername();
 	}
 	
 	@PostMapping("/register")
 	public String processRegister(User user, Model model) {
-		
 
-		if(userService.findUserByUsername(user.getUsername()) != null) {
+		if (userService.findUserByUsername(user.getUsername()) != null) {
+			// Sorry for my doubts regarding this on Telegram :(
 			model.addAttribute("error", "Benutzername bereits vergeben!");
 			return "register";
 		}
@@ -76,13 +98,9 @@ public class TestController {
 			return "register";
 		}
 
-		String hashPassword = UserService.hashPassword(user.getPassword());
-
+		final String hashPassword = UserService.hashPassword(user.getPassword());
 		user.setPassword(hashPassword);
-		
 		userService.saveUser(user.getUsername(), hashPassword, user.getBenutzeralter(), user.getEmail());
-		
-		
 		
 		return "index";
 	}
@@ -93,6 +111,4 @@ public class TestController {
 		
 		return "redirect:/";
 	}
-	
-
 }

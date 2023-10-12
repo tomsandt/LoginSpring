@@ -26,22 +26,31 @@ public abstract class UserService implements JpaRepository<User, Long> {
 
     public static String hashPassword(String password) {
 
+        // :)
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = md.digest(password.getBytes());
+            // Declaring everything as final is a tick of mine :)
+            // Doesn't need to be done.
+            // But declaring everything as restrictive as possible has advantages,
+            // gives you more insights about your assumptions.
+            final MessageDigest md = MessageDigest.getInstance("SHA-256");
+            final byte[] hashBytes = md.digest(password.getBytes());
             return Base64.getEncoder().encodeToString(hashBytes);
-        } catch(NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
+            /*
             e.printStackTrace();
             return null;
+            */
+            // Never use e.printStackTrace();
+            // Exceptions are printed (or logged if you use a looging framework) automatically.
+            // If you must to catch a checked exception as it is the case here,
+            // simply rethrow it as a RuntimeException and add some context information:
+            throw new RuntimeException("UserService.hashPassword - Exception", e);
         }
-
     }
-
-
 
     public void createUser(String username, String password, int benutzeralter, String email) {
 
-        User newUser = new User();
+        final User newUser = new User();
 
         newUser.setUsername(username);
         newUser.setPassword(password);
