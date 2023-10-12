@@ -27,9 +27,8 @@
             <input type="password" th:field="*{repeatPassword}" placeholder="Passwort bestätigen"><br><br>
             <p>Email-Adresse</p>
             <input type="email" th:field="*{email}"><br><br>
-            <p>Alter
-            </p>
-            <input type="number" th:field="*{benutzeralter}" min="18" max="99"><br><br>
+            <p>Geburtsdatum</p>
+            <input type="date" th:field="*{geburtdatum}"><br><br>
             <button type="submit">Registrieren</button>
             <button type="button" onclick="location.href='/'">Zurück</button>
         </div>

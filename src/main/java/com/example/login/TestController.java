@@ -66,7 +66,7 @@ public class TestController {
 			return "register";
 		}
 		
-		if(user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty()) {
+		if(user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty() || user.getGeburtdatum() == null) {
 			model.addAttribute("errorEmptyField", "Das Feld darf nicht leer sein!");
 			return "register";
 		}
@@ -77,7 +77,7 @@ public class TestController {
 		}
 
 		
-		userService.createUser(user.getUsername(), user.getPassword(), user.getBenutzeralter(), user.getEmail());
+		userService.createUser(user.getUsername(), user.getPassword(), user.getGeburtdatum(), user.getEmail());
 
 		return "index";
 	}

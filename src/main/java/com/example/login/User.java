@@ -2,6 +2,8 @@ package com.example.login;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class User {
 	@Id
@@ -15,7 +17,7 @@ public class User {
 	@Transient
 	public String repeatPassword;
 	@Column(nullable = false)
-	public int benutzeralter;
+	public LocalDate geburtdatum;
 
 	@Column(nullable = false)
 	public String email;
@@ -48,17 +50,18 @@ public class User {
 		this.password = password;
 	}
 
-	public int getBenutzeralter() {
-		return benutzeralter;
-	}
-
-	public void setBenutzeralter(int benutzeralter) {
-		this.benutzeralter = benutzeralter;
-	}
-
 	public void setRepeatPassword(String repeatPassword) {
 		this.repeatPassword = repeatPassword;
 	}
+
+	public LocalDate getGeburtdatum() {
+		return geburtdatum;
+	}
+
+	public void setGeburtdatum(LocalDate geburtdatum) {
+		this.geburtdatum = geburtdatum;
+	}
+
 	public long getId() {
 		return id;
 	}
