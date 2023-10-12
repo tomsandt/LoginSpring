@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class TestController {
 	
-	private final UserRepository userService;
+	private final UserService userService;
 	
 	@Autowired
-	public TestController(UserRepository userService) {
+	public TestController(UserService userService) {
 		this.userService = userService;
 	}
 	
@@ -49,7 +49,7 @@ public class TestController {
 	@PostMapping("/")
 	public String processLogin(Model model, User user) {
 		User storedUser = userService.findUserByUsername(user.getUsername());
-		if( storedUser != null && storedUser.getPassword().equals(UserService.hashPassword(user.getPassword()))) {
+		if(storedUser != null && storedUser.getPassword().equals(user.getPassword())) {
 			return "redirect:landingPage?username=" + user.getUsername();
 		}else {
 			model.addAttribute("error", "Falscher Benutzername oder Passwort");
@@ -71,19 +71,14 @@ public class TestController {
 			return "register";
 		}
 		
-		if(user.getPassword().equals(user.getRepeatPassword()) == false) {
+		if(!user.getPassword().equals(user.getRepeatPassword())) {
 			model.addAttribute("errorRepeatPassword", "Die Passwörter stimmen nicht überein!");
 			return "register";
 		}
 
-		String hashPassword = UserService.hashPassword(user.getPassword());
+		
+		userService.createUser(user.getUsername(), user.getPassword(), user.getBenutzeralter(), user.getEmail());
 
-		user.setPassword(hashPassword);
-		
-		userService.saveUser(user.getUsername(), hashPassword, user.getBenutzeralter(), user.getEmail());
-		
-		
-		
 		return "index";
 	}
 	
