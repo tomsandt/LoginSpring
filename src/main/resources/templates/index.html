@@ -17,13 +17,15 @@
 <body>
 
 	<div>
-	<form th:action="@{/}" method="post" th:object="${user}">
-		<h1>Login-System</h1><br>
+	<form th:action="@{/}" method="post" th:object="${userTO}">
+		<h1>Sign in</h1><br>
 		<div th:if="${error}" class="error" th:text="${error}"></div>
+		<div th:if="${errorUserDoesNotExist}" class="error" th:text="${errorUserDoesNotExist}"></div>
+		<div th:if="${errorFalsePassword}" class="error" th:text="${errorFalsePassword}"></div>
 		<input type="text" th:field="*{username}" placeholder="Username"><br><br>
 		<input type="password" th:field="*{password}" placeholder="Password"><br><br>
 		<button type="submit">Login</button>
-		<button type="button" onclick="location.href='register'">Registrieren</button>
+		<button type="button" onclick="location.href='register'">Register</button>
 	</form>
 	</div>
 

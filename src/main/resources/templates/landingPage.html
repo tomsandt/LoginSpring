@@ -5,13 +5,13 @@
     <title>Dashboard</title>
 </head>
 <body>
-	<form th:object="${user}">
+	<form th:object="${userTO}">
 	<div th:if="${errorUserNotFound}" class="errorUserNotFound" th:text="${errorUserNotFound}"></div>
         <h1>Dashboard</h1>
-    <p>Benutzername: <span th:text="${user.username}"></span></p>
-    <p>Passwort: <span th:text="${user.password}"></span></p>
+    <p>Username: <span th:text="${user.username}"></span></p>
+    <p>Password: <span th:text="${user.password}"></span></p>
     <p>Email: <span th:text="${user.email}"></span></p>
-    <p>Alter: <span th:text="${user.benutzeralter}"></span></p>
+    <p>Date of Birth: <span th:text="${user.birthDate}"></span></p>
 	</form>
 	
 	<form th:action="@{logout}" method="post">
