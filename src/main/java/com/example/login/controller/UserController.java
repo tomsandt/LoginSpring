@@ -1,8 +1,9 @@
 package com.example.login.controller;
 
-import com.example.login.Object.User;
-import com.example.login.Object.UserTO;
-import com.example.login.Service.UserService;
+import com.example.login.object.User;
+import com.example.login.object.UserTO;
+import com.example.login.service.UserService;
+import com.example.login.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	private Util util;
 	
 	@GetMapping("/")
 	public String showLogin(Model model) {
@@ -53,7 +54,7 @@ public class UserController {
 			return "index";
 		}
 
-		final String hashedInputPwd = UserService.hashPassword(user.getPassword());
+		final String hashedInputPwd = util.hashPassword(user.getPassword());
 		final String hashedPwd = storedUser.getPassword();
         assert hashedInputPwd != null;
         if(!hashedInputPwd.equals(hashedPwd)) {
@@ -65,7 +66,6 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public String processRegister(UserTO user, Model model) {
-		
 
 		if (userService.findUserByUsername(user.getUsername()) != null) {
 			model.addAttribute("error", "Username already in use.");
@@ -87,13 +87,11 @@ public class UserController {
 			return "index";
 		}
 
-		final String hashPassword = UserService.hashPassword(user.getPassword());
+		final String hashPassword = util.hashPassword(user.getPassword());
 
 		user.setPassword(hashPassword);
 		
 		userService.createUser(user);
-		
-		
 		
 		return "index";
 	}
@@ -104,6 +102,4 @@ public class UserController {
 		
 		return "redirect:/";
 	}
-	
-
 }
