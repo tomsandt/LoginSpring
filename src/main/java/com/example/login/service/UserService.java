@@ -1,14 +1,10 @@
 package com.example.login.service;
 
-import com.example.login.object.User;
-import com.example.login.object.UserTO;
+import com.example.login.domain.User;
+import com.example.login.domain.UserTO;
 import com.example.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
 
 
 @Service

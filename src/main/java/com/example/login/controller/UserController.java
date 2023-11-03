@@ -1,7 +1,7 @@
 package com.example.login.controller;
 
-import com.example.login.object.User;
-import com.example.login.object.UserTO;
+import com.example.login.domain.User;
+import com.example.login.domain.UserTO;
 import com.example.login.service.UserService;
 import com.example.login.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;

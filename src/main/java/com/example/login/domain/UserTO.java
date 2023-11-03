@@ -1,4 +1,4 @@
-package com.example.login.object;
+package com.example.login.domain;
 
 import java.time.LocalDate;
 
