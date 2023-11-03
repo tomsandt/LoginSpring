@@ -1,4 +1,4 @@
-package com.example.login.Controller;
+package com.example.login.controller;
 
 import com.example.login.Object.User;
 import com.example.login.Object.UserTO;
