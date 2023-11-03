@@ -19,6 +19,10 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	private Util util;
+
+	public UserController() {
+		util = new Util();
+	}
 	
 	@GetMapping("/")
 	public String showLogin(Model model) {
