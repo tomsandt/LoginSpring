@@ -19,7 +19,7 @@ public class Util {
             }
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            return null;
+            throw new RuntimeException("Util.hashPassword - Exception", e);
         }
     }
 }
