@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,7 +34,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/landingPage")
-	public String showLandingPage(Model model, @ModelAttribute("user") User user) {
+	public String showLandingPage(Model model, HttpSession session) {
+
+		String username = (String) session.getAttribute("username");
+		User user = userService.findUserByUsername(username);
 
 		if (user != null) {
 			model.addAttribute("user", user);
@@ -47,7 +49,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/")
-	public String processLogin(Model model, UserDTO user) {
+	public String processLogin(Model model, UserDTO user, HttpSession session) {
 		User storedUser = userService.findUserByUsername(user.getUsername());
 		if(storedUser == null) {
 			model.addAttribute("errorUserDoesNotExist", "Unknown Username.");
@@ -61,7 +63,7 @@ public class UserController {
 			model.addAttribute("errorFalsePassword", "Password is not correct.");
 			return "index";
 		}
-		model.addAttribute("user", storedUser);
+		session.setAttribute("username", storedUser.getUsername());
 		return "redirect:/landingPage";
 	}
 	
