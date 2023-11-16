@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,32 +18,32 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
 	private Util util;
 	
 	@GetMapping("/")
 	public String showLogin(Model model) {
-		model.addAttribute("userTO", new UserDTO());
+		model.addAttribute("userDTO", new UserDTO());
 		return "index";
 	}
 	
 	@GetMapping("/register")
 	public String showRegister(Model model) {
-		model.addAttribute("userTO", new UserDTO());
+		model.addAttribute("userDTO", new UserDTO());
 		return "register";
 	}
 	
 	@GetMapping("/landingPage")
-	public String showLandingPage(Model model,@RequestParam("username") String username) {
-		
-		User user = userService.findUserByUsername(username);
-		
+	public String showLandingPage(Model model, @ModelAttribute("user") User user) {
+
 		if (user != null) {
 			model.addAttribute("user", user);
+			return "landingPage";
 		} else {
-			
 			model.addAttribute("errorUserNotFound", "The User could not be found.");
+			return "redirect:/";
 		}
-		return "landingPage";
 	}
 	
 	@PostMapping("/")
@@ -61,7 +61,8 @@ public class UserController {
 			model.addAttribute("errorFalsePassword", "Password is not correct.");
 			return "index";
 		}
-		return "redirect:landingPage?username=" + user.getUsername();
+		model.addAttribute("user", storedUser);
+		return "redirect:/landingPage";
 	}
 	
 	@PostMapping("/register")

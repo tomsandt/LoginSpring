@@ -17,14 +17,14 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public void createUser(UserDTO userTO) {
+    public void createUser(UserDTO UserDTO) {
 
         User newUser = new User();
 
-        newUser.setUsername(userTO.getUsername());
-        newUser.setPassword(userTO.getPassword());
-        newUser.setBirthDate(userTO.getBirthDate());
-        newUser.setEmail(userTO.getEmail());
+        newUser.setUsername(UserDTO.getUsername());
+        newUser.setPassword(UserDTO.getPassword());
+        newUser.setBirthDate(UserDTO.getBirthDate());
+        newUser.setEmail(UserDTO.getEmail());
 
         userRepository.saveUser(newUser.getUsername(), newUser.getPassword(), newUser.getBirthDate(), newUser.getEmail());
     }

@@ -17,7 +17,7 @@
 <body>
 
 	<div>
-	<form th:action="@{/}" method="post" th:object="${userTO}">
+	<form th:action="@{/}" method="post" th:object="${userDTO}">
 		<h1>Sign in</h1><br>
 		<div th:if="${error}" class="error" th:text="${error}"></div>
 		<div th:if="${errorUserDoesNotExist}" class="error" th:text="${errorUserDoesNotExist}"></div>
