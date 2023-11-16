@@ -1,7 +1,7 @@
 package com.example.login.service;
 
 import com.example.login.domain.User;
-import com.example.login.domain.UserTO;
+import com.example.login.domain.UserDTO;
 import com.example.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public void createUser(UserTO userTO) {
+    public void createUser(UserDTO userTO) {
 
         User newUser = new User();
 

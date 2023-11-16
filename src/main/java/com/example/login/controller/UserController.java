@@ -1,7 +1,7 @@
 package com.example.login.controller;
 
 import com.example.login.domain.User;
-import com.example.login.domain.UserTO;
+import com.example.login.domain.UserDTO;
 import com.example.login.service.UserService;
 import com.example.login.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +19,16 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	private Util util;
-
-	public UserController() {
-		util = new Util();
-	}
 	
 	@GetMapping("/")
 	public String showLogin(Model model) {
-		model.addAttribute("userTO", new UserTO());
+		model.addAttribute("userTO", new UserDTO());
 		return "index";
 	}
 	
 	@GetMapping("/register")
 	public String showRegister(Model model) {
-		model.addAttribute("userTO", new UserTO());
+		model.addAttribute("userTO", new UserDTO());
 		return "register";
 	}
 	
@@ -51,7 +47,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/")
-	public String processLogin(Model model, UserTO user) {
+	public String processLogin(Model model, UserDTO user) {
 		User storedUser = userService.findUserByUsername(user.getUsername());
 		if(storedUser == null) {
 			model.addAttribute("errorUserDoesNotExist", "Unknown Username.");
@@ -69,7 +65,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
-	public String processRegister(UserTO user, Model model) {
+	public String processRegister(UserDTO user, Model model) {
 
 		if (userService.findUserByUsername(user.getUsername()) != null) {
 			model.addAttribute("error", "Username already in use.");

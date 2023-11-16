@@ -2,7 +2,7 @@ package com.example.login.domain;
 
 import java.time.LocalDate;
 
-public class UserTO {
+public class UserDTO {
 	private String username;
 	private String password;
 	private String repeatPassword;

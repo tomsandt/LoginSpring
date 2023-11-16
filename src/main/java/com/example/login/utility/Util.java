@@ -1,9 +1,12 @@
 package com.example.login.utility;
 
+import org.springframework.stereotype.Component;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
+@Component
 public class Util {
 
     public String hashPassword(String password) {
