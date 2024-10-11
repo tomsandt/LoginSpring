@@ -26,7 +26,7 @@ public class TestController {
 		return "index";
 	}
 	
-	@GetMapping("/TEST")
+	@GetMapping("/TESTTTTT")
 	public String showRegister(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
