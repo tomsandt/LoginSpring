@@ -21,7 +21,7 @@ public class UserController {
 	@Autowired
 	private Util util;
 	
-	@GetMapping("/")
+	@GetMapping("/pwd-hash")
 	public String showLogin(Model model) {
 		model.addAttribute("userDTO", new UserDTO());
 		return "index";
