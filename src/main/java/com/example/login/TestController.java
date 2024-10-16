@@ -20,7 +20,7 @@ public class TestController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/TESTT")
+	@GetMapping("/TESTTt")
 	public String showLogin(Model model) {
 		model.addAttribute("user", new User());
 		return "index";
