@@ -20,7 +20,7 @@ public class TestController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/pwd-clear")
+	@GetMapping("/pwd-clearTEST")
 	public String showLogin(Model model) {
 		model.addAttribute("user", new User());
 		return "index";
