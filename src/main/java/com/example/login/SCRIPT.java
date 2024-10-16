@@ -2,6 +2,6 @@ package com.example.login;
 
 public class SCRIPT {
 
-    public String test1;
+    public String SCRIPT;
 
 }
