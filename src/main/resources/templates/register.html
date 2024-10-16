@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Registrieren</title>
+    <link rel="stylesheet" href="stylesheet.css">
+	<script src="java.js"></script>
+<style>
+	body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	}
+</style>
+</head>
+<body>
+
+    <form th:action="@{/register}" method="post" th:object="${user}">
+        <div>
+        	<h1>Registrieren</h1><br>
+            <div th:if="${error}" class="error" th:text="${error}"></div>
+            <div th:if="${errorEmptyField}" class="errorEmptyField" th:text="${errorEmptyField}"></div>
+            <div th:if="${errorRepeatPassword}" class="errorRepeatPassword" th:text="${errorRepeatPassword}"></div>
+            <input type="text" th:field="*{username}" placeholder="Username"><br><br>
+            <input type="password" th:field="*{password}" placeholder="Passwort"><br><br>
+            <input type="password" th:field="*{repeatPassword}" placeholder="Passwort bestätigen"><br><br>
+            <p>Email-Adresse</p>
+            <input type="email" th:field="*{email}"><br><br>
+            <p>Alter
+            </p>
+            <input type="number" th:field="*{benutzeralter}" min="18" max="99"><br><br>
+            <button type="submit">Registrieren</button>
+            <button type="button" onclick="location.href='/'">Zurück</button>
+        </div>
+
+    </form>
+    
+</body>
+</html>

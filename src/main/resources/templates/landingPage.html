@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+</head>
+<body>
+	<form th:object="${user}">
+	<div th:if="${errorUserNotFound}" class="errorUserNotFound" th:text="${errorUserNotFound}"></div>
+        <h1>Dashboard</h1>
+    <p>Benutzername: <span th:text="${user.username}"></span></p>
+    <p>Passwort: <span th:text="${user.password}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+    <p>Alter: <span th:text="${user.benutzeralter}"></span></p>
+	</form>
+	
+	<form th:action="@{logout}" method="post">
+	<button type="submit">Logout</button>
+	</form>
+    
+</body>
+</html>
